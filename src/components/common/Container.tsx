@@ -38,7 +38,29 @@ const Container: React.FC<ChildrenType> = (props) => {
         </div>
       </header>
       <main>{children}</main>
-      <footer></footer>
+      <footer
+        css={css`
+          width: 100%;
+          height: 100%;
+          padding: 10px;
+          justify-content: center;
+          display: flex;
+          background: #42032c;
+        `}
+      >
+        <div>
+          <p
+            css={css`
+              text-align: center;
+              font-size: 18px;
+              font-weight: 700;
+              color: white;
+            `}
+          >
+            AnimeList. &copy;2022
+          </p>
+        </div>
+      </footer>
     </>
   );
 };

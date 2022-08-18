@@ -4,9 +4,9 @@ import React, { Key, useEffect, useState } from 'react';
 
 import { css } from '@emotion/react';
 import { useQuery, gql } from '@apollo/client';
-import Card from '../components/Card';
-import Container from '../components/Container';
-import PaginationGroup from '../components/PaginationGroup';
+import Card from '../components/common/Card';
+import Container from '../components/common/Container';
+import PaginationGroup from '../components/common/PaginationGroup';
 
 const Home: React.FC = (props: any) => {
   const [statePage, setStatePage] = useState(1);
@@ -52,13 +52,13 @@ const Home: React.FC = (props: any) => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     refetchAnime();
-  
   }, [statePage]);
   return (
     <>
       <Container>
         <div
           css={css`
+            margin-bottom: 10%;
             padding-right: 15%;
             padding-left: 15%;
             @media (max-width: 600px) {
@@ -135,14 +135,21 @@ const Home: React.FC = (props: any) => {
               gap: 10px;
             `}
           >
-            <PaginationGroup
-              statePage={statePage}
-              currentPage={currentPage}
-              lastPage={lastPage}
-              handlePrevPagination={handlePrevPagination}
-              handleMovePage={handleMovePage}
-              handleNextPagination={handleNextPagination}
-            />
+            <div
+              css={css`
+                margin-left: auto;
+                margin-right: auto;
+              `}
+            >
+              <PaginationGroup
+                statePage={statePage}
+                currentPage={currentPage}
+                lastPage={lastPage}
+                handlePrevPagination={handlePrevPagination}
+                handleMovePage={handleMovePage}
+                handleNextPagination={handleNextPagination}
+              />
+            </div>
           </div>
         </div>
       </Container>

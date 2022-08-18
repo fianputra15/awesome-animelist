@@ -15,42 +15,43 @@ const PaginationGroup: React.FC<PageType> = (props) => {
   const {
     statePage,
     // currentPage,
-    // lastPage,
+    lastPage,
     handlePrevPagination,
     // handleMovePage,
     handleNextPagination,
   } = props;
   return (
-    <div
-      css={css`
-        display: flex;
-        margin-left: auto;
-        margin-right: auto;
-        gap: 10px;
-        font-weight: 800 !important;
-      `}
-    >
-      <button
-        onClick={handlePrevPagination}
-        disabled={statePage === 1}
+    <>
+      <div
         css={css`
-          background: #d36b00;
-          width: 40px;
-          opacity: ${statePage !== 1 ? '100%' : '50%'};
-          height: 40px;
-          box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-          border: none;
-          ${statePage !== 1 && 'cursor: pointer;'}
-          color: white;
-          border-radius: 3px;
-          &:hover {
-            filter: brightness(70%);
-          }
+          display: flex;
+          margin-left: auto;
+          margin-right: auto;
+          gap: 10px;
+          font-weight: 800 !important;
         `}
       >
-        <span className="material-icons">arrow_back</span>
-      </button>
-      {/* <button
+        <button
+          onClick={handlePrevPagination}
+          disabled={statePage === 1}
+          css={css`
+            background: #d36b00;
+            width: 40px;
+            opacity: ${statePage !== 1 ? '100%' : '50%'};
+            height: 40px;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+            border: none;
+            ${statePage !== 1 && 'cursor: pointer;'}
+            color: white;
+            border-radius: 3px;
+            &:hover {
+              filter: brightness(70%);
+            }
+          `}
+        >
+          <span className="material-icons">arrow_back</span>
+        </button>
+        {/* <button
         onClick={() => handleMovePage(1)}
         disabled={statePage === 1}
         css={css`
@@ -218,25 +219,37 @@ const PaginationGroup: React.FC<PageType> = (props) => {
         {String(lastPage ?? '...')}
       </button> */}
 
-      <button
-        onClick={handleNextPagination}
+        <button
+          onClick={handleNextPagination}
+          css={css`
+            background: #d36b00;
+            width: 40px;
+            height: 40px;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 3px;
+            &:hover {
+              filter: brightness(70%);
+            }
+          `}
+        >
+          <span className="material-icons">arrow_forward</span>
+        </button>
+      </div>{' '}
+      <p
         css={css`
-          background: #d36b00;
-          width: 40px;
-          height: 40px;
-          box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-          border: none;
-          color: white;
-          cursor: pointer;
-          border-radius: 3px;
-          &:hover {
-            filter: brightness(70%);
-          }
+          dispay: block;
+          font-size: 12px;
         `}
       >
-        <span className="material-icons">arrow_forward</span>
-      </button>
-    </div>
+        <span className="material-icons"></span>
+        <span>
+          Page: <b>{statePage}</b> of {lastPage ?? '...'}
+        </span>
+      </p>
+    </>
   );
 };
 
