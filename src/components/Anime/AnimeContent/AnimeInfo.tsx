@@ -1,11 +1,13 @@
 /** @jsxImportSource @emotion/react */
-import React, { Key } from 'react';
+import React, { Key, ReactNode } from 'react';
 import { isEmpty } from 'lodash';
 import Popup from 'reactjs-popup';
 import { css } from '@emotion/react';
+import { Link } from 'react-router-dom';
 interface AnimeInfoType {
   coverImage: any;
   title: any;
+  id: number;
   ratingAmount: any;
   fadeCover: any;
   genres: any[];
@@ -16,15 +18,20 @@ interface AnimeInfoType {
   handleAddToCollection: Function;
   stateOpenedFormNew: boolean;
   setStateNewCollection: Function;
+  handleAddNewCollection: Function;
+  handleReleaseCollection: Function;
   data: any[];
+  seasonYear: ReactNode;
 }
 const AnimeInfo: React.FC<AnimeInfoType> = (props: AnimeInfoType) => {
   const {
+    id,
     coverImage,
     title,
     ratingAmount,
     fadeCover,
     genres,
+    seasonYear,
     episodes,
     data,
     setStateOpenedFormNew,
@@ -32,8 +39,11 @@ const AnimeInfo: React.FC<AnimeInfoType> = (props: AnimeInfoType) => {
     handleAddToCollection,
     stateNewCollection,
     setStateNewCollection,
+    handleReleaseCollection,
+    handleAddNewCollection,
     listOfCollections,
   } = props;
+
   return (
     <div
       css={css`
@@ -107,101 +117,140 @@ const AnimeInfo: React.FC<AnimeInfoType> = (props: AnimeInfoType) => {
               </h1>
             </div>
           </div>
-
           <div
             css={css`
               display: flex;
-              flex-direction: column;
-              gap: 10px;
+              flex-wrap: wrap;
             `}
           >
             <div
               css={css`
                 display: flex;
-                justify-items: center;
-                flex-direction: row;
+                flex-direction: column;
+
+                gap: 20px;
+                width: 400px;
+                @media (max-width: 600px) {
+                  width: auto;
+                }
               `}
             >
-              <span
-                css={css`
-                  width: 30%;
-                  color: gray;
-                `}
-              >
-                Genre{' '}
-              </span>
-              <span
-                css={css`
-                  width: 70%;
-                  font-weight: 600;
-                `}
-              >
-                {genres?.map((val: any, key: Key) => `${val}, `)}
-              </span>
-            </div>
-            <div
-              css={css`
-                display: flex;
-                color: gray;
-                justify-items: center;
-                flex-direction: row;
-              `}
-            >
-              <span
-                css={css`
-                  width: 30%;
-                `}
-              >
-                Episodes{' '}
-              </span>
-              <span
-                css={css`
-                  width: 70%;
-                  font-weight: 600;
-                `}
-              >
-                {episodes}
-              </span>
-            </div>
-            <div
-              css={css`
-                display: flex;
-                justify-items: center;
-                flex-direction: row;
-              `}
-            >
-              <span
-                css={css`
-                  color: gray;
-                  width: 30%;
-                `}
-              >
-                Ratings{' '}
-              </span>
-              <span
+              <div
                 css={css`
                   display: flex;
                   justify-items: center;
-                  width: 70%;
-                  color: orange;
-                  font-weight: 600;
-                  font-size: 16px;
-                  @media (max-width: 600px) {
-                    flex-basis: 60%;
-                    font-size: 12px;
-                  }
+                  flex-direction: row;
+                  gap: 10px;
                 `}
               >
                 <span
                   css={css`
-                    font-size: 14px;
+                    width: 30%;
+                    color: gray;
                   `}
-                  className="material-icons"
                 >
-                  star
+                  Genre{' '}
                 </span>
-                {ratingAmount}
-              </span>
+                <span
+                  css={css`
+                    width: 70%;
+                    font-weight: 600;
+                  `}
+                >
+                  {genres?.map((val: any, key: Key) => `${val}, `)}
+                </span>
+              </div>
+              <div
+                css={css`
+                  display: flex;
+                  color: gray;
+                  gap: 10px;
+                  justify-items: center;
+                  flex-direction: row;
+                `}
+              >
+                <span
+                  css={css`
+                    width: 30%;
+                  `}
+                >
+                  Episodes{' '}
+                </span>
+                <span
+                  css={css`
+                    width: 70%;
+                    font-weight: 600;
+                  `}
+                >
+                  {episodes}
+                </span>
+              </div>
+              <div
+                css={css`
+                  display: flex;
+                  color: gray;
+                  gap: 10px;
+                  justify-items: center;
+                  flex-direction: row;
+                `}
+              >
+                <span
+                  css={css`
+                    width: 30%;
+                  `}
+                >
+                  Year{' '}
+                </span>
+                <span
+                  css={css`
+                    width: 70%;
+                    font-weight: 600;
+                  `}
+                >
+                  {seasonYear}
+                </span>
+              </div>
+              <div
+                css={css`
+                  display: flex;
+                  gap: 10px;
+                  justify-items: center;
+                  flex-direction: row;
+                `}
+              >
+                <span
+                  css={css`
+                    color: gray;
+                    width: 30%;
+                  `}
+                >
+                  Ratings{' '}
+                </span>
+                <span
+                  css={css`
+                    display: flex;
+                    justify-items: center;
+                    width: 70%;
+                    color: orange;
+                    font-weight: 600;
+                    font-size: 16px;
+                    @media (max-width: 600px) {
+                      flex-basis: 60%;
+                      font-size: 12px;
+                    }
+                  `}
+                >
+                  <span
+                    css={css`
+                      font-size: 14px;
+                    `}
+                    className="material-icons"
+                  >
+                    star
+                  </span>
+                  {ratingAmount}
+                </span>
+              </div>
             </div>
             <div>
               <Popup
@@ -216,6 +265,7 @@ const AnimeInfo: React.FC<AnimeInfoType> = (props: AnimeInfoType) => {
                       background: #d36b00;
                       border: none;
                       padding: 10px;
+                      margin-bottom: auto;
                       cursor: pointer;
                       border-radius: 10px;
                       color: white;
@@ -254,7 +304,7 @@ const AnimeInfo: React.FC<AnimeInfoType> = (props: AnimeInfoType) => {
                           `}
                         >
                           <div>
-                            <h2>Add New Collection</h2>
+                            <h2>Add Collection</h2>
                           </div>
                           <button
                             css={css`
@@ -281,74 +331,126 @@ const AnimeInfo: React.FC<AnimeInfoType> = (props: AnimeInfoType) => {
 
                         <div>
                           <div>
-                            <h4>List Collection</h4>
-                            {isEmpty(listOfCollections) && (
+                            {!stateOpenedFormNew && <h4>List Collection</h4>}
+
+                            <div
+                              css={css`
+                                display: flex;
+                              `}
+                            >
                               <div
                                 css={css`
-                                  display: flex;
+                                  margin-left: auto;
+                                  margin-right: auto;
+                                  text-align: center;
                                 `}
                               >
-                                <div
+                                {isEmpty(listOfCollections) &&
+                                  !stateOpenedFormNew && (
+                                    <p
+                                      css={css`
+                                        font-weight: 600;
+                                      `}
+                                    >
+                                      Empty Collection
+                                    </p>
+                                  )}
+                                <button
+                                  onClick={() => setStateOpenedFormNew(true)}
+                                  className="button"
                                   css={css`
                                     margin-left: auto;
-                                    margin-right: auto;
-                                    text-align: center;
+                                    border: none;
+                                    padding: 10px;
+                                    cursor: pointer;
+                                    border-radius: 8px;
+                                    color: #d36b00;
+                                    background: transparent;
+                                    font-weight: 700;
+                                    &:hover {
+                                      font-weight: 800;
+                                    }
                                   `}
                                 >
-                                  <p
-                                    css={css`
-                                      font-weight: 600;
-                                    `}
-                                  >
-                                    Empty Collection :)
-                                  </p>
-                                  <button
-                                    onClick={() => setStateOpenedFormNew(true)}
-                                    className="button"
+                                  Add New
+                                </button>
+                              </div>
+                            </div>
+
+                            {stateOpenedFormNew && (
+                              <div>
+                                <form
+                                  onSubmit={(e) => handleAddNewCollection(e)}
+                                  css={css`
+                                    display: flex;
+                                  `}
+                                >
+                                  <div
                                     css={css`
                                       margin-left: auto;
-                                      border: none;
-                                      padding: 10px;
-                                      background: #d36b00;
-                                      cursor: pointer;
-                                      border-radius: 8px;
-                                      color: white;
-                                      font-weight: 700;
-                                      &:hover {
-                                        filter: brightness(90%);
-                                      }
+                                      margin-right: auto;
+                                      width: 80%;
                                     `}
                                   >
-                                    Add New
-                                  </button>
-                                </div>
-                              </div>
-                            )}
-                            {stateOpenedFormNew && (
-                              <div
-                                css={css`
-                                  display: flex;
-                                `}
-                              >
-                                <form>
-                                  <input
-                                    type="text"
-                                    onChange={(e) => setStateNewCollection(e)}
-                                    value={stateNewCollection}
-                                    placeholder="New Collection"
-                                    required
-                                    css={css`
-                                      padding: 10px;
-                                      border: 1px solid whitesmoke;
-                                      width: auto%;
-                                      background: white;
-                                    `}
-                                  />
+                                    <h4>New Collection</h4>
+                                    <div
+                                      css={css`
+                                        display: flex;
+                                        width: 100%;
+                                      `}
+                                    >
+                                      <input
+                                        type="text"
+                                        onChange={(e) =>
+                                          setStateNewCollection(e.target.value)
+                                        }
+                                        value={stateNewCollection}
+                                        placeholder="New Collection"
+                                        required
+                                        css={css`
+                                          padding: 10px;
+                                          width: 100%;
+                                          border: 1px solid whitesmoke;
+                                        `}
+                                      />
+                                    </div>
+
+                                    <div
+                                      css={css`
+                                        display: flex;
+                                        width: 100%;
+                                      `}
+                                    >
+                                      <button
+                                        type="submit"
+                                        css={css`
+                                          border: none;
+                                          padding: 10px;
+                                          margin-top: 10px;
+                                          margin-left: auto;
+                                          background: #d36b00;
+                                          cursor: pointer;
+                                          border-radius: 8px;
+                                          color: white;
+                                          width: 100px;
+                                          font-weight: 700;
+                                          &:hover {
+                                            filter: brightness(90%);
+                                          }
+                                          @media (max-width: 600px) {
+                                            width: 100%;
+                                          }
+                                        `}
+                                      >
+                                        Save
+                                      </button>
+                                    </div>
+                                  </div>
                                 </form>
                               </div>
                             )}
 
-                            {listOfCollections && (
+                            {!isEmpty(listOfCollections) && (
                               <ul
                                 css={css`
                                   width: auto;
@@ -380,33 +482,102 @@ const AnimeInfo: React.FC<AnimeInfoType> = (props: AnimeInfoType) => {
                                             margin-bottom: auto;
                                           `}
                                         >
-                                          {colc?.key}
+                                          <Link
+                                            css={css`
+                                              color: black;
+                                            `}
+                                            to={`/collection/${colc?.key}`}
+                                          >
+                                            {colc?.key}
+                                          </Link>
+                                          {JSON.parse(colc?.val ?? '[]')?.some(
+                                            (an: any) => an?.Media?.id === id,
+                                          ) && (
+                                            <span
+                                              css={css`
+                                                margin-left: 6px;
+                                                padding: 4px;
+                                                font-size: 10px;
+                                                color: white;
+                                                border-radius: 10px;
+                                                background: rgba(
+                                                  211,
+                                                  107,
+                                                  0,
+                                                  0.8
+                                                );
+                                              `}
+                                            >
+                                              selected
+                                            </span>
+                                          )}
                                         </p>
-
-                                        <button
-                                          type="button"
-                                          onClick={() =>
-                                            handleAddToCollection(
-                                              colc?.key,
-                                              data,
-                                            )
-                                          }
-                                          css={css`
-                                            align-self: baseline;
-                                            margin-top: auto;
-                                            margin-bottom: auto;
-
-                                            cursor: pointer;
-                                            border: none;
-                                            padding: 10px;
-                                            background: #d36b00;
-                                            border-radius: 8px;
-                                            color: white;
-                                            font-weight: 700;
-                                          `}
-                                        >
-                                          Choose
-                                        </button>
+                                        {!JSON.parse(colc?.val ?? '[]')?.some(
+                                          (an: any) => an?.Media?.id === id,
+                                        ) ? (
+                                          // Checking if the anime already in collection
+                                          <>
+                                            <button
+                                              type="button"
+                                              onClick={() =>
+                                                handleAddToCollection(
+                                                  colc?.key,
+                                                  data,
+                                                )
+                                              }
+                                              css={css`
+                                                align-self: baseline;
+                                                margin-top: auto;
+                                                margin-bottom: auto;
+                                                cursor: pointer;
+                                                border: none;
+                                                padding: 10px;
+                                                background: #d36b00;
+                                                border-radius: 8px;
+                                                color: white;
+                                                font-weight: 700;
+                                              `}
+                                            >
+                                              Choose
+                                            </button>
+                                          </>
+                                        ) : (
+                                          <>
+                                            {/* <p>
+                                              css=
+                                              {css`
+                                                margin-top: auto;
+                                                margin-bottom: auto;
+                                              `}
+                                              {colc?.key}
+                                            </p> */}
+                                            <button
+                                              onClick={() =>
+                                                handleReleaseCollection(
+                                                  colc?.key,
+                                                  data,
+                                                )
+                                              }
+                                              type="button"
+                                              css={css`
+                                                align-self: baseline;
+                                                margin-top: auto;
+                                                margin-bottom: auto;
+                                                background: transparent;
+                                                cursor: pointer;
+                                                border: none;
+                                                padding: 10px;
+                                                color: #d36b00;
+                                                border-radius: 8px;
+                                                font-weight: 700;
+                                              `}
+                                            >
+                                              <span className="material-icons">
+                                                delete
+                                              </span>
+                                            </button>
+                                          </>
+                                        )}
                                       </div>
                                     </li>
                                   ),

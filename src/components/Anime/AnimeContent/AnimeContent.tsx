@@ -11,7 +11,9 @@ interface AnimeContentType {
   stateOpenedFormNew: any;
   setStateOpenedFormNew: any;
   listOfCollections: any;
-  handleAddToCollection: any;
+  handleAddToCollection: Function;
+  handleAddNewCollection: Function;
+  handleReleaseCollection: Function;
 }
 
 export const AnimeContent: React.FC<any> = (props: AnimeContentType) => {
@@ -22,6 +24,8 @@ export const AnimeContent: React.FC<any> = (props: AnimeContentType) => {
     setStateNewCollection,
     stateOpenedFormNew,
     handleAddToCollection,
+    handleAddNewCollection,
+    handleReleaseCollection,
     listOfCollections,
     setStateOpenedFormNew,
   } = props;
@@ -52,6 +56,8 @@ export const AnimeContent: React.FC<any> = (props: AnimeContentType) => {
         setStateNewCollection={setStateNewCollection}
         stateOpenedFormNew={stateOpenedFormNew}
         setStateOpenedFormNew={setStateOpenedFormNew}
+        handleAddNewCollection={handleAddNewCollection}
+        handleReleaseCollection={handleReleaseCollection}
         fadeCover={fadeCover}
         {...data?.Media}
         {...data?.Review}

@@ -22,6 +22,8 @@ const Container: React.FC<ChildrenType> = (props) => {
           css={css({
             paddingRight: '15%',
             paddingLeft: '15%',
+            display: 'flex',
+            justifyContent: 'space-between',
           })}
         >
           <Link
@@ -35,20 +37,39 @@ const Container: React.FC<ChildrenType> = (props) => {
           >
             Anime List.
           </Link>
+          <Link
+            css={css`
+              margin-top: auto;
+              margin-bottom: auto;
+              font-size: 14px;
+              text-decoration: none;
+              font-weight: 800;
+              color: white;
+              &:hover {
+                text-decoration: underline;
+              }
+            `}
+            to="/collection"
+          >
+            Collection
+          </Link>
         </div>
       </header>
       <main>{children}</main>
       <footer
         css={css`
           width: 100%;
-          height: 100%;
-          padding: 10px;
-          justify-content: center;
-          display: flex;
-          background: #42032c;
         `}
       >
-        <div>
+        <div
+          css={css`
+            height: 100%;
+            padding: 10px;
+            justify-content: center;
+            display: flex;
+            background: #42032c;
+          `}
+        >
           <p
             css={css`
               text-align: center;
