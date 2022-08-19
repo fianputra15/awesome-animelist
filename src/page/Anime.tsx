@@ -143,12 +143,7 @@ const Anime: React.FC = (props: any) => {
             margin-bottom: 40%;
           `}
         >
-          {!isEmpty(data?.Media?.bannerImage) ? (
-            <AnimeBanner
-              shimeringLoading={shimeringLoading}
-              image={data?.Media?.bannerImage}
-            />
-          ) : (
+          {isEmpty(data?.Media?.bannerImage) ? (
             <div
               css={css`
                 width: 100%;
@@ -167,12 +162,17 @@ const Anime: React.FC = (props: any) => {
                   #f6f6f6 33%
                 );
                 background-size: 1200px 100%;
+                box-shadow: rgba(0, 0, 0, 0.5) 0px 1px 4px;
                 @media (max-width: 600px) {
-                  height: auto;
-                  top: 60%;
+                  height: 150px;
                 }
               `}
             ></div>
+          ) : (
+            <AnimeBanner
+              shimeringLoading={shimeringLoading}
+              image={data?.Media?.bannerImage}
+            />
           )}
 
           <AnimeContent

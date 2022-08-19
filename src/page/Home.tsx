@@ -8,7 +8,7 @@ import Card from '../components/common/Card';
 import { isEmpty } from 'lodash';
 import Container from '../components/common/Container';
 import PaginationGroup from '../components/common/PaginationGroup';
-
+import ShimmerCard from '../components/common/ShimmerCard';
 
 const shimeringLoading = keyframes`
   0% {
@@ -116,14 +116,28 @@ const Home: React.FC = (props: any) => {
           </div>
 
           <div>
-            <p
-              css={css({
-                textAlign: 'center',
-                fontSize: '20px',
-              })}
+            <div
+              css={css`
+                font-size: 30px;
+                display: flex;
+                flex-wrap: wrap;
+
+                align-items: center;
+                justify-content: center;
+                gap: 20px;
+              `}
             >
-              {loading && 'Loading...'}
-            </p>
+              {loading && (
+                <>
+                  <ShimmerCard />
+                  <ShimmerCard />
+                  <ShimmerCard />
+                  <ShimmerCard />
+                  <ShimmerCard />
+                  <ShimmerCard />
+                </>
+              )}
+            </div>
           </div>
           <div
             css={css`
