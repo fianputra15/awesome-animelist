@@ -60,7 +60,7 @@ const Container: React.FC<ChildrenType> = (props) => {
                 margin-top: 20px;
               }
             `}
-            to="/anime/collection"
+            to="/collection"
           >
             Collection
           </Link>
