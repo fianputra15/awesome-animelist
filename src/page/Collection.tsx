@@ -9,8 +9,11 @@ import { isEmpty } from 'lodash';
 const Collection: React.FC = () => {
   const specialChars = /[-’/`~!#*$@_%+=.,^&(){}[\]|;:”<>?\\]/g;
   const [stateCollectionList, setStateCollectionList]: any = useState([]);
-  const [stateNewCollection, setStateNewCollection]: any = useState('');
+  const [stateCollectionName, setStateCollectionName]: any = useState('');
+  const [stateEditCollectionName, setStateEditCollectionName]: any =
+    useState('');
   const [stateErrorMsg, setStateErrorMsg]: any = useState('');
+  const [stateErrorMsgEdit, setStateErrorMsgEdit]: any = useState('');
   function containsSpecialChars(str: string) {
     return specialChars.test(str);
   }
@@ -33,26 +36,59 @@ const Collection: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (containsSpecialChars(stateNewCollection)) {
+    if (containsSpecialChars(stateCollectionName)) {
       setStateErrorMsg(
         `Please try to fill with no special characters contain ${specialChars}`,
       );
     } else {
       setStateErrorMsg('');
     }
-  }, [stateNewCollection]);
+  }, [stateCollectionName]);
+  useEffect(() => {
+    if (containsSpecialChars(stateEditCollectionName)) {
+      setStateErrorMsg(
+        `Please try to fill with no special characters contain ${specialChars}`,
+      );
+    } else {
+      setStateErrorMsgEdit('');
+    }
+  }, [stateErrorMsgEdit]);
 
   const handleAddNewCollection = (e: any, closeButton: any) => {
     e.preventDefault();
-    if (!localStorage.getItem(stateNewCollection)) {
-      localStorage.setItem(stateNewCollection, '[]');
+    if (!localStorage.getItem(stateCollectionName)) {
+      localStorage.setItem(stateCollectionName, '[]');
       handleGetCollectionFromStorage();
       Swal.fire({
         icon: 'success',
         title: 'Success',
         text: 'Successfully adding new collection',
       });
-      setStateNewCollection('');
+      setStateCollectionName('');
+      closeButton();
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops... Collection is already exist',
+        text: 'Please try to fill with other collection name :)',
+      });
+    }
+  };
+  const handleEditCollection = (e: any, closeButton: any, key: string) => {
+    e.preventDefault();
+
+    if (!localStorage.getItem(stateEditCollectionName)) {
+      localStorage.setItem(stateEditCollectionName, '[]');
+      const oldData: any = localStorage.getItem(key);
+      localStorage.setItem(stateEditCollectionName, oldData);
+      localStorage.removeItem(key);
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: `Successfully update collection to ${stateEditCollectionName}`,
+      });
+      handleGetCollectionFromStorage();
+      setStateEditCollectionName('');
       closeButton();
     } else {
       Swal.fire({
@@ -94,6 +130,7 @@ const Collection: React.FC = () => {
           @media (max-width: 600px) {
             padding-right: 5%;
             padding-left: 5%;
+            margin-bottom: 70%;
           }
         `}
       >
@@ -121,6 +158,7 @@ const Collection: React.FC = () => {
           <Popup
             trigger={
               <button
+                onClick={() => setStateCollectionName('')}
                 css={css({
                   width: 'auto',
                   borderRadius: '8px',
@@ -230,9 +268,9 @@ const Collection: React.FC = () => {
                                 <input
                                   type="text"
                                   onChange={(e) =>
-                                    setStateNewCollection(e.target.value)
+                                    setStateCollectionName(e.target.value)
                                   }
-                                  value={stateNewCollection}
+                                  value={stateCollectionName}
                                   placeholder="New Collection"
                                   required
                                   css={css`
@@ -318,6 +356,10 @@ const Collection: React.FC = () => {
               handleDeleteCollection={handleDeleteCollection}
               colc={colc}
               key={key}
+              handleEditCollection={handleEditCollection}
+              stateErrorMsgEdit={stateErrorMsgEdit}
+              stateEditCollectionName={stateEditCollectionName}
+              setStateEditCollectionName={setStateEditCollectionName}
             />
           ))}
         </div>
