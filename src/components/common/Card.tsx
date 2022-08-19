@@ -6,10 +6,9 @@ import { Link } from 'react-router-dom';
 interface CardType {
   id: Number;
   title: any;
+  seasonYear: number;
   coverImage: any;
   key: Key | null | undefined;
-  description: String;
-  episodes: any;
 }
 const fade = keyframes`
   from {
@@ -20,7 +19,7 @@ const fade = keyframes`
   }
 `;
 const Card: React.FC<any> = (props: CardType) => {
-  const { id, title, key, coverImage, episodes } = props;
+  const { id, title, key, coverImage, seasonYear } = props;
   return (
     <Link
       css={css`
@@ -79,7 +78,7 @@ const Card: React.FC<any> = (props: CardType) => {
               margin-bottom: auto;
             `}
           >
-            {episodes} Episodes
+            {seasonYear}
           </span>
         </div>
       </div>
@@ -114,18 +113,6 @@ const Card: React.FC<any> = (props: CardType) => {
         >
           {title?.english || title?.romaji}
         </h3>
-        <div
-          css={css({
-            fontSize: '12px',
-            lineHeight: '20px',
-            width: '90%',
-            overflow: 'hidden',
-            whiteSpace: 'nowrap',
-            textOverflow: 'ellipsis',
-          })}
-        >
-          {/* {description} */}
-        </div>
       </div>
       {/* <div
         css={css`

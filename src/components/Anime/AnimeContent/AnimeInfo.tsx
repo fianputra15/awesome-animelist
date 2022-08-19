@@ -304,7 +304,7 @@ const AnimeInfo: React.FC<AnimeInfoType> = (props: AnimeInfoType) => {
                           `}
                         >
                           <div>
-                            <h2>Add Collection</h2>
+                            <h2>List Collection</h2>
                           </div>
                           <button
                             css={css`
@@ -331,8 +331,6 @@ const AnimeInfo: React.FC<AnimeInfoType> = (props: AnimeInfoType) => {
 
                         <div>
                           <div>
-                            {!stateOpenedFormNew && <h4>List Collection</h4>}
-
                             <div
                               css={css`
                                 display: flex;

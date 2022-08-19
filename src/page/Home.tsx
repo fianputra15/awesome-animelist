@@ -41,6 +41,7 @@ const Home: React.FC = (props: any) => {
             description
             episodes
             bannerImage
+            seasonYear
           }
         }
       }
@@ -58,12 +59,13 @@ const Home: React.FC = (props: any) => {
       <Container>
         <div
           css={css`
-            margin-bottom: 10%;
+            margin-bottom: 20%;
             padding-right: 15%;
             padding-left: 15%;
             @media (max-width: 600px) {
               padding-right: 5%;
               padding-left: 5%;
+              margin-bottom: 10%;
             }
           `}
         >
