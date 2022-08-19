@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 import AnimeInfo from './AnimeInfo';
 import AnimeDescription from './AnimeDescription';
 interface AnimeContentType {
-  fadeCover: any;
+  shimeringLoading: any;
   data: any;
   stateNewCollection: any;
   setStateNewCollection: any;
@@ -18,7 +18,7 @@ interface AnimeContentType {
 
 export const AnimeContent: React.FC<any> = (props: AnimeContentType) => {
   const {
-    fadeCover,
+    shimeringLoading,
     data,
     stateNewCollection,
     setStateNewCollection,
@@ -58,7 +58,7 @@ export const AnimeContent: React.FC<any> = (props: AnimeContentType) => {
         setStateOpenedFormNew={setStateOpenedFormNew}
         handleAddNewCollection={handleAddNewCollection}
         handleReleaseCollection={handleReleaseCollection}
-        fadeCover={fadeCover}
+        shimeringLoading={shimeringLoading}
         {...data?.Media}
         {...data?.Review}
         data={data}

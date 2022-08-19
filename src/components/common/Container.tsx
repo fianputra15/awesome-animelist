@@ -19,12 +19,16 @@ const Container: React.FC<ChildrenType> = (props) => {
         })}
       >
         <div
-          css={css({
-            paddingRight: '15%',
-            paddingLeft: '15%',
-            display: 'flex',
-            justifyContent: 'space-between',
-          })}
+          css={css`
+            padding-right: 15%;
+            padding-left: 15%;
+            display: flex;
+            justify-content: space-between;
+            @media (max-width: 600px) {
+              display: block;
+              text-align: center;
+            }
+          `}
         >
           <Link
             to="/"
@@ -33,6 +37,10 @@ const Container: React.FC<ChildrenType> = (props) => {
               text-decoration: none;
               font-weight: 800;
               color: white;
+              @media (max-width: 600px) {
+                display: block;
+                text-align: center;
+              }
             `}
           >
             Anime List.
@@ -45,11 +53,14 @@ const Container: React.FC<ChildrenType> = (props) => {
               text-decoration: none;
               font-weight: 800;
               color: white;
-              &:hover {
-                text-decoration: underline;
+              text-decoration: underline;
+              @media (max-width: 600px) {
+                text-align: center;
+                display: block;
+                margin-top: 20px;
               }
             `}
-            to="/collection"
+            to="/anime/collection"
           >
             Collection
           </Link>

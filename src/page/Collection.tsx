@@ -130,7 +130,7 @@ const Collection: React.FC = () => {
           @media (max-width: 600px) {
             padding-right: 5%;
             padding-left: 5%;
-            margin-bottom: 70%;
+            margin-bottom: 80%;
           }
         `}
       >
@@ -138,6 +138,9 @@ const Collection: React.FC = () => {
           css={css`
             display: flex;
             align-items: center;
+            @media (max-width: 600px) {
+              display: block;
+            }
           `}
         >
           <div
@@ -159,29 +162,41 @@ const Collection: React.FC = () => {
             trigger={
               <button
                 onClick={() => setStateCollectionName('')}
-                css={css({
-                  width: 'auto',
-                  borderRadius: '8px',
-                  fontSize: '16px',
-                  marginTop: 'auto',
-                  marginBottom: 'auto',
-                  marginLeft: 'auto',
-                  height: '50px',
-                  cursor: 'pointer',
-                  paddingLeft: '2%',
-                  paddingRight: '2%',
-                  background: '#D36B00',
-                  color: 'white',
-                  border: 'none',
-                  alignItems: 'center',
-                  display: 'flex',
-                  fontWeight: '600',
-                  gap: '5px',
-                  boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',
-                })}
+                css={css`
+                  width: auto;
+                  border-radius: 8px;
+                  font-size: 16px;
+                  margin-top: auto;
+                  margin-bottom: auto;
+                  margin-left: auto;
+                  height: 50px;
+                  cursor: pointer;
+                  padding-left: 2%;
+                  padding-right: 2%;
+                  background: #d36b00;
+                  color: white;
+                  border: none;
+                  align-items: center;
+                  display: flex;
+                  font-weight: 600;
+                  gap: 5px;
+                  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+                  @media (max-width: 600px) {
+                    width: 100%;
+                  }
+                `}
               >
-                <span className="material-icons">add</span>
-                <span>Add New Collection</span>
+                <div
+                  css={css`
+                    margin-left: auto;
+                    margin-right: auto;
+                    display: flex;
+                    align-items: center;
+                  `}
+                >
+                  <span className="material-icons">add</span>
+                  <span>Add New Collection</span>
+                </div>
               </button>
             }
             modal

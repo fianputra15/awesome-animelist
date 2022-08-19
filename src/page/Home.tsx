@@ -2,12 +2,22 @@
 /* eslint-disable */
 import React, { Key, useEffect, useState } from 'react';
 
-import { css } from '@emotion/react';
+import { css, keyframes } from '@emotion/react';
 import { useQuery, gql } from '@apollo/client';
 import Card from '../components/common/Card';
+import { isEmpty } from 'lodash';
 import Container from '../components/common/Container';
 import PaginationGroup from '../components/common/PaginationGroup';
 
+
+const shimeringLoading = keyframes`
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+`;
 const Home: React.FC = (props: any) => {
   const [statePage, setStatePage] = useState(1);
 
@@ -59,13 +69,13 @@ const Home: React.FC = (props: any) => {
       <Container>
         <div
           css={css`
-            margin-bottom: 20%;
+            margin-bottom: 40%;
             padding-right: 15%;
             padding-left: 15%;
             @media (max-width: 600px) {
               padding-right: 5%;
               padding-left: 5%;
-              margin-bottom: 10%;
+              margin-bottom: ${isEmpty(data?.Page.mediaList) ? '100%' : '20%'};
             }
           `}
         >

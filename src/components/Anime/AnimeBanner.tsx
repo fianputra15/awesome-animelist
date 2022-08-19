@@ -12,6 +12,7 @@ export const AnimeBanner: React.FC<any> = (props: AnimeBannerType) => {
     <div>
       <img
         loading="lazy"
+        alt={`image of ${image}`}
         css={css`
           width: 100%;
           height: 300px;

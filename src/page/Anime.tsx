@@ -9,20 +9,14 @@ import Container from '../components/common/Container';
 import Swal from 'sweetalert2';
 import { AnimeBanner } from '../components/Anime/AnimeBanner';
 import { AnimeContent } from '../components/Anime/AnimeContent/AnimeContent';
-const fadeCover = keyframes`
-  from {
-    opacity: 0.4;
+import { isEmpty } from 'lodash';
+
+const shimeringLoading = keyframes`
+  0% {
+    background-position: -1000px 0;
   }
-  to {
-    opacity: 1;
-  }
-`;
-const fadeBanner = keyframes`
-  from {
-    opacity: 0.4;
-  }
-  to {
-    opacity: 1;
+  100% {
+    background-position: 1000px 0;
   }
 `;
 const Anime: React.FC = (props: any) => {
@@ -92,10 +86,11 @@ const Anime: React.FC = (props: any) => {
   };
 
   const handleReleaseCollection: any = (key: any | undefined, anime: any) => {
-    const savedCollection: string | undefined =
-      localStorage.getItem(key) ?? '';
-    const listOfCollection = JSON.parse(savedCollection)
-    const filteredCollection = listOfCollection?.filter((val: any) => val?.Media?.id !== anime?.Media?.id)
+    const savedCollection: string | undefined = localStorage.getItem(key) ?? '';
+    const listOfCollection = JSON.parse(savedCollection);
+    const filteredCollection = listOfCollection?.filter(
+      (val: any) => val?.Media?.id !== anime?.Media?.id,
+    );
     localStorage.setItem(key, JSON.stringify(filteredCollection));
     // listOfCollection.set(anime);
 
@@ -103,7 +98,7 @@ const Anime: React.FC = (props: any) => {
       icon: 'success',
       title: 'Success',
       text: `Successfully released ${anime?.Media?.title?.english}  from ${key} collection`,
-    });   
+    });
     setInterval(() => {
       history.go(0);
     }, 1500);
@@ -145,20 +140,47 @@ const Anime: React.FC = (props: any) => {
         <div
           css={css`
             position: relative;
-            margin-bottom: 230px;
+            margin-bottom: 40%;
           `}
         >
-          <AnimeBanner
-            fadeBanner={fadeBanner}
-            image={data?.Media?.bannerImage}
-          />
+          {!isEmpty(data?.Media?.bannerImage) ? (
+            <AnimeBanner
+              shimeringLoading={shimeringLoading}
+              image={data?.Media?.bannerImage}
+            />
+          ) : (
+            <div
+              css={css`
+                width: 100%;
+                height: 300px;
+                object-fit: cover;
+                animation-duration: 2.2s;
+                animation-fill-mode: forwards;
+                animation-iteration-count: infinite;
+                animation-name: ${shimeringLoading};
+                animation-timing-function: linear;
+                background: #ddd;
+                background: linear-gradient(
+                  to right,
+                  #f6f6f6 8%,
+                  #f0f0f0 18%,
+                  #f6f6f6 33%
+                );
+                background-size: 1200px 100%;
+                @media (max-width: 600px) {
+                  height: auto;
+                  top: 60%;
+                }
+              `}
+            ></div>
+          )}
 
           <AnimeContent
             stateNewCollection={stateNewCollection}
             setStateNewCollection={setStateNewCollection}
             stateOpenedFormNew={stateOpenedFormNew}
             setStateOpenedFormNew={setStateOpenedFormNew}
-            fadeCover={fadeCover}
+            shimeringLoading={shimeringLoading}
             listWebStorage={listWebStorage}
             data={data}
             listOfCollections={listOfCollections}

@@ -84,9 +84,6 @@ const Card: React.FC<any> = (props: CardType) => {
       </div>
 
       <div
-        // css={css`
-        //   color: #abb1bb;
-        // `}
         css={css`
           color: #42032c;
           @media (max-width: 600px) {
@@ -101,33 +98,19 @@ const Card: React.FC<any> = (props: CardType) => {
             width: 220px;
             height: 100px;
             font-weight: 800;
+            text-align: center;
             text-shadow: rgba(0, 0, 0, 0.2) 0px 1px 2px;
             @media (max-width: 600px) {
               margin-left: auto;
               margin-right: auto;
               height: auto;
               width: 100%;
-              text-align: center;
             }
           `}
         >
           {title?.english || title?.romaji}
         </h3>
       </div>
-      {/* <div
-        css={css`
-          height: 200px;
-          overflow: hidden;
-        `}
-      >
-        <img
-          css={css`
-            width: 100%;
-            object-fit: cover;
-          `}
-          src={coverImage?.large}
-        />
-      </div> */}
     </Link>
   );
 };

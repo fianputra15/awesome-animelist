@@ -9,7 +9,6 @@ interface AnimeInfoType {
   title: any;
   id: number;
   ratingAmount: any;
-  fadeCover: any;
   genres: any[];
   episodes: string;
   setStateOpenedFormNew: any;
@@ -21,6 +20,7 @@ interface AnimeInfoType {
   handleAddNewCollection: Function;
   handleReleaseCollection: Function;
   data: any[];
+  shimeringLoading: any;
   seasonYear: ReactNode;
 }
 const AnimeInfo: React.FC<AnimeInfoType> = (props: AnimeInfoType) => {
@@ -29,7 +29,6 @@ const AnimeInfo: React.FC<AnimeInfoType> = (props: AnimeInfoType) => {
     coverImage,
     title,
     ratingAmount,
-    fadeCover,
     genres,
     seasonYear,
     episodes,
@@ -42,8 +41,9 @@ const AnimeInfo: React.FC<AnimeInfoType> = (props: AnimeInfoType) => {
     handleReleaseCollection,
     handleAddNewCollection,
     listOfCollections,
+    shimeringLoading,
   } = props;
-
+  console.log(shimeringLoading);
   return (
     <div
       css={css`
@@ -59,17 +59,54 @@ const AnimeInfo: React.FC<AnimeInfoType> = (props: AnimeInfoType) => {
           }
         `}
       >
-        <img
-          css={css`
-            animation: ${fadeCover} 0.5s;
-            width: 100%;
-            margin-top: 20px;
-            box-shadow: rgba(0, 0, 0, 0.5) 0px 1px 4px;
-            border-radius: 10px;
-            object-fit: cover;
-          `}
-          src={coverImage?.large}
-        />
+        {isEmpty(coverImage?.large) ? (
+          <div
+            css={css`
+              animation-duration: 2.2s;
+              animation-fill-mode: forwards;
+              animation-iteration-count: infinite;
+              animation-name: ${shimeringLoading};
+              animation-timing-function: linear;
+              background: #ddd;
+              background: linear-gradient(
+                to right,
+                #f6f6f6 8%,
+                #f0f0f0 18%,
+                #f6f6f6 33%
+              );
+              height: 250px;
+              background-size: 1200px 100%;
+              width: 100%;
+              margin-top: 20px;
+              box-shadow: rgba(0, 0, 0, 0.5) 0px 1px 4px;
+              border-radius: 10px;
+              object-fit: cover;
+            `}
+          ></div>
+        ) : (
+          <img
+            css={css`
+              width: 100%;
+              margin-top: 20px;
+              animation-duration: 2.2s;
+              animation-fill-mode: forwards;
+              animation-iteration-count: infinite;
+              animation-name: ${shimeringLoading};
+              animation-timing-function: linear;
+              background: #ddd;
+              background: linear-gradient(
+                to right,
+                #f6f6f6 8%,
+                #f0f0f0 18%,
+                #f6f6f6 33%
+              );
+              box-shadow: rgba(0, 0, 0, 0.5) 0px 1px 4px;
+              border-radius: 10px;
+              object-fit: cover;
+            `}
+            src={coverImage?.large}
+          />
+        )}
       </div>
       <div
         css={css`
@@ -252,7 +289,13 @@ const AnimeInfo: React.FC<AnimeInfoType> = (props: AnimeInfoType) => {
                 </span>
               </div>
             </div>
-            <div>
+            <div
+              css={css`
+                @media (max-width: 600px) {
+                  display: block;
+                }
+              `}
+            >
               <Popup
                 trigger={
                   <button
@@ -276,6 +319,7 @@ const AnimeInfo: React.FC<AnimeInfoType> = (props: AnimeInfoType) => {
                       align-items: center;
                       @media (max-width: 600px) {
                         font-size: 12px;
+                        width: 100%;
                       }
                     `}
                   >
