@@ -318,12 +318,11 @@ const ListCollection: React.FC<any> = (props: ListCollectionType) => {
             <img
               css={css`
                 width: 100%;
-                height: 100%;
-                object-position: cover;
+                object-position: center;
                 filter: brightness(60%);
                 @media (max-width: 600px) {
                   object-position: cover;
-                  width: 100%z;
+                  width: 100%;
                 }
               `}
               src={JSON.parse(colc?.val)[0]?.Media?.bannerImage}
