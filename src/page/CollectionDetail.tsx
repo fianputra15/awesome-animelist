@@ -6,15 +6,12 @@ import Card from '../components/common/Card';
 import { isEmpty } from 'lodash';
 import Swal from 'sweetalert2';
 import Popup from 'reactjs-popup';
-// import { isEmpty } from 'lodash';
 import { useHistory, useParams } from 'react-router-dom';
 const CollectionDetail: React.FC = () => {
   const specialChars = /[-’/`~!#*$@_%+=.,^&(){}[\]|;:”<>?\\]/g;
   const history = useHistory();
   const [stateCollectionList, setStateCollectionList]: any = useState([]);
   const [stateCollectionName, setStateCollectionName]: any = useState('');
-  //   const [stateEditCollectionName, setStateEditCollectionName]: any =
-  //     useState('');
   const [stateErrorMsg, setStateErrorMsg]: any = useState('');
   const params: any = useParams();
   function containsSpecialChars(str: string) {
@@ -95,51 +92,6 @@ const CollectionDetail: React.FC = () => {
       }
     });
   };
-  //   const handleEditCollection = (e: any, closeButton: any, key: string) => {
-  //     e.preventDefault();
-
-  //     if (!localStorage.getItem(stateEditCollectionName)) {
-  //       localStorage.setItem(stateEditCollectionName, '[]');
-  //       const oldData: any = localStorage.getItem(key);
-  //       localStorage.setItem(stateEditCollectionName, oldData);
-  //       localStorage.removeItem(key);
-  //       Swal.fire({
-  //         icon: 'success',
-  //         title: 'Success',
-  //         text: `Successfully update collection to ${stateEditCollectionName}`,
-  //       });
-  //       handleGetCollectionFromStorage();
-  //       setStateEditCollectionName('');
-  //       closeButton();
-  //     } else {
-  //       Swal.fire({
-  //         icon: 'error',
-  //         title: 'Oops... Collection is already exist',
-  //         text: 'Please try to fill with other collection name :)',
-  //       });
-  //     }
-  //   };
-
-  //   const handleDeleteCollection = (e: any, key: string) => {
-  //     e.preventDefault();
-  //     Swal.fire({
-  //       title: `Are you sure for delete ${key} collection?`,
-  //       showCancelButton: true,
-  //       confirmButtonText: 'Yes',
-  //       confirmButtonAriaLabel: 'white',
-  //       confirmButtonColor: '#d36b00',
-  //     }).then((result: any) => {
-  //       if (result.isConfirmed) {
-  //         localStorage.removeItem(key);
-  //         Swal.fire({
-  //           icon: 'success',
-  //           title: 'Success',
-  //           text: `Successfully deleted ${key} collection`,
-  //         });
-  //         handleGetCollectionFromStorage();
-  //       }
-  //     });
-  //   };
 
   return (
     <Container>

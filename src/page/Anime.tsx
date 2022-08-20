@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-/* eslint-disable */
 import React, { useState } from 'react';
 import { css, keyframes } from '@emotion/react';
 import { useHistory, useParams } from 'react-router-dom';
@@ -47,11 +46,7 @@ const Anime: React.FC = (props: any) => {
       }
     }
   `;
-  const {
-    data,
-    loading,
-    refetch: refetchAnime,
-  } = useQuery(GET_ANIMES, {
+  const { data } = useQuery(GET_ANIMES, {
     variables: {
       id: params?.id,
     },

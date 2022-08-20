@@ -1,8 +1,7 @@
 /** @jsxImportSource @emotion/react */
-/* eslint-disable */
 import React, { Key, useEffect, useState } from 'react';
 
-import { css, keyframes } from '@emotion/react';
+import { css } from '@emotion/react';
 import { useQuery, gql } from '@apollo/client';
 import Card from '../components/common/Card';
 import { isEmpty } from 'lodash';
@@ -10,26 +9,19 @@ import Container from '../components/common/Container';
 import PaginationGroup from '../components/common/PaginationGroup';
 import ShimmerCard from '../components/common/ShimmerCard';
 
-const shimeringLoading = keyframes`
-  0% {
-    background-position: -1000px 0;
-  }
-  100% {
-    background-position: 1000px 0;
-  }
-`;
 const Home: React.FC = (props: any) => {
   const [statePage, setStatePage] = useState(1);
 
   const handleNextPagination = () => {
-    setStatePage((page: any) => page + 1);
+    setStatePage((page: any) => parseInt(page, 10) + 1);
   };
   const handlePrevPagination = () => {
-    setStatePage((page: any) => page - 1);
+    setStatePage((page: any) => parseInt(page, 10) - 1);
   };
   const handleMovePage = (page: any) => {
     setStatePage(page);
   };
+
   const GET_ANIMES = gql`
     query {
       Page(page: ${statePage}, perPage: 10) {
@@ -57,8 +49,8 @@ const Home: React.FC = (props: any) => {
       }
     }
   `;
-  const { data, loading, refetch: refetchAnime, called } = useQuery(GET_ANIMES);
-  const { currentPage, lastPage, total } = data?.Page?.pageInfo || 1;
+  const { data, loading, refetch: refetchAnime } = useQuery(GET_ANIMES);
+  const { currentPage, lastPage } = data?.Page?.pageInfo || 1;
   console.log(lastPage);
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
