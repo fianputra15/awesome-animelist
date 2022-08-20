@@ -322,8 +322,8 @@ const ListCollection: React.FC<any> = (props: ListCollectionType) => {
                 object-position: cover;
                 filter: brightness(60%);
                 @media (max-width: 600px) {
-                  object-position: center;
-                  width: auto;
+                  object-position: cover;
+                  width: 100%z;
                 }
               `}
               src={JSON.parse(colc?.val)[0]?.Media?.bannerImage}

@@ -51,7 +51,7 @@ const Card: React.FC<any> = (props: CardType) => {
           position: relative;
           height: 320px;
           background-image: url('${coverImage?.large}');
-          background-size: auto;
+          background-size: cover;
           border-top-right-radius: 10px;
           border-left-right-radius: 10px;
           overflow: hidden;

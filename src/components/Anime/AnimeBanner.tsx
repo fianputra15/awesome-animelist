@@ -20,7 +20,7 @@ export const AnimeBanner: React.FC<any> = (props: AnimeBannerType) => {
           object-fit: cover;
           filter: brightness(70%);
           @media (max-width: 600px) {
-            height: auto;
+            height: 150px;
             top: 60%;
           }
         `}

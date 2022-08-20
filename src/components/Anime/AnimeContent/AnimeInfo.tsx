@@ -8,7 +8,7 @@ interface AnimeInfoType {
   coverImage: any;
   title: any;
   id: number;
-  ratingAmount: any;
+  rating: any;
   genres: any[];
   episodes: string;
   setStateOpenedFormNew: any;
@@ -28,7 +28,7 @@ const AnimeInfo: React.FC<AnimeInfoType> = (props: AnimeInfoType) => {
     id,
     coverImage,
     title,
-    ratingAmount,
+    rating,
     genres,
     seasonYear,
     episodes,
@@ -285,7 +285,7 @@ const AnimeInfo: React.FC<AnimeInfoType> = (props: AnimeInfoType) => {
                   >
                     star
                   </span>
-                  {ratingAmount}
+                  {rating}
                 </span>
               </div>
             </div>

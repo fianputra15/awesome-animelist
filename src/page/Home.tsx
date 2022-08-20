@@ -121,6 +121,7 @@ const Home: React.FC = (props: any) => {
                 font-size: 30px;
                 display: flex;
                 flex-wrap: wrap;
+                margin-bottom: 40px;
 
                 align-items: center;
                 justify-content: center;
@@ -129,12 +130,11 @@ const Home: React.FC = (props: any) => {
             >
               {loading && (
                 <>
-                  <ShimmerCard />
-                  <ShimmerCard />
-                  <ShimmerCard />
-                  <ShimmerCard />
-                  <ShimmerCard />
-                  <ShimmerCard />
+                  {Array(8)
+                    .fill(1)
+                    .map((el, i) => (
+                      <ShimmerCard key={i} />
+                    ))}
                 </>
               )}
             </div>
