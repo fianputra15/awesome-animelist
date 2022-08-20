@@ -299,6 +299,7 @@ const ListCollection: React.FC<any> = (props: ListCollectionType) => {
                 padding: 20px;
                 position: absolute;
                 top: 2%;
+                text-align: left;
                 text-transform: capitalize;
               `}
             >
@@ -318,11 +319,11 @@ const ListCollection: React.FC<any> = (props: ListCollectionType) => {
             <img
               css={css`
                 width: 100%;
-                object-position: center;
+                height: 300px;
+                object-position: cover;
                 filter: brightness(60%);
                 @media (max-width: 600px) {
                   object-position: cover;
-                  width: 100%;
                 }
               `}
               src={JSON.parse(colc?.val)[0]?.Media?.bannerImage}

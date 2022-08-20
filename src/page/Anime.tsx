@@ -102,7 +102,9 @@ const Anime: React.FC = (props: any) => {
   const handleAddNewCollection = (e: any) => {
     e.preventDefault();
     if (!localStorage.getItem(stateNewCollection)) {
-      localStorage.setItem(stateNewCollection, '[]');
+      const newItem = [];
+      newItem.push(data);
+      localStorage.setItem(stateNewCollection, JSON.stringify(newItem));
       setInterval(() => {
         history.go(0);
       }, 1500);
