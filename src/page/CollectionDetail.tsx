@@ -2,38 +2,28 @@
 import React, { Key, useEffect, useState } from 'react';
 import Container from '../components/common/Container';
 import { css } from '@emotion/react';
-import ListCollection from '../components/Collection/ListCollection';
+import Card from '../components/common/Card';
+import { isEmpty } from 'lodash';
 import Swal from 'sweetalert2';
 import Popup from 'reactjs-popup';
-import { isEmpty } from 'lodash';
-const Collection: React.FC = () => {
+// import { isEmpty } from 'lodash';
+import { useHistory, useParams } from 'react-router-dom';
+const CollectionDetail: React.FC = () => {
   const specialChars = /[-’/`~!#*$@_%+=.,^&(){}[\]|;:”<>?\\]/g;
+  const history = useHistory();
   const [stateCollectionList, setStateCollectionList]: any = useState([]);
   const [stateCollectionName, setStateCollectionName]: any = useState('');
-  const [stateEditCollectionName, setStateEditCollectionName]: any =
-    useState('');
+  //   const [stateEditCollectionName, setStateEditCollectionName]: any =
+  //     useState('');
   const [stateErrorMsg, setStateErrorMsg]: any = useState('');
-  const [stateErrorMsgEdit, setStateErrorMsgEdit]: any = useState('');
+  const params: any = useParams();
   function containsSpecialChars(str: string) {
     return specialChars.test(str);
   }
 
-  const handleGetCollectionFromStorage = () => {
-    const listWebStorage = { ...localStorage };
-    const listOfCollections: any =
-      Object.entries(listWebStorage)?.map((val) => {
-        return {
-          key: val[0],
-          val: val[1],
-        };
-      }) || [];
-
-    setStateCollectionList(listOfCollections);
-  };
-
   useEffect(() => {
-    handleGetCollectionFromStorage();
-  }, []);
+    setStateCollectionName(params?.id);
+  }, [params?.id]);
 
   useEffect(() => {
     if (containsSpecialChars(stateCollectionName)) {
@@ -44,51 +34,31 @@ const Collection: React.FC = () => {
       setStateErrorMsg('');
     }
   }, [stateCollectionName]);
-  useEffect(() => {
-    if (containsSpecialChars(stateEditCollectionName)) {
-      setStateErrorMsgEdit(
-        `Please try to fill with no special characters contain ${specialChars}`,
-      );
-    } else {
-      setStateErrorMsgEdit('');
-    }
-  }, [stateEditCollectionName]);
 
-  const handleAddNewCollection = (e: any, closeButton: any) => {
+  const handleGetCollectionFromStorage = () => {
+    const listCollection = JSON.parse(localStorage.getItem(params?.id) ?? '[]');
+    setStateErrorMsg('');
+    setStateCollectionList(listCollection);
+  };
+
+  useEffect(() => {
+    handleGetCollectionFromStorage();
+  }, []);
+
+  const handleEditCollection = (e: any, closeButton: any) => {
     e.preventDefault();
+
     if (!localStorage.getItem(stateCollectionName)) {
       localStorage.setItem(stateCollectionName, '[]');
-      handleGetCollectionFromStorage();
+      const oldData: any = localStorage.getItem(params?.id);
+      localStorage.setItem(stateCollectionName, oldData);
+      localStorage.removeItem(params?.id);
       Swal.fire({
         icon: 'success',
         title: 'Success',
-        text: 'Successfully adding new collection',
+        text: `Successfully update collection to ${stateCollectionName}`,
       });
-      setStateCollectionName('');
-      closeButton();
-    } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops... Collection is already exist',
-        text: 'Please try to fill with other collection name :)',
-      });
-    }
-  };
-  const handleEditCollection = (e: any, closeButton: any, key: string) => {
-    e.preventDefault();
-
-    if (!localStorage.getItem(stateEditCollectionName)) {
-      localStorage.setItem(stateEditCollectionName, '[]');
-      const oldData: any = localStorage.getItem(key);
-      localStorage.setItem(stateEditCollectionName, oldData);
-      localStorage.removeItem(key);
-      Swal.fire({
-        icon: 'success',
-        title: 'Success',
-        text: `Successfully update collection to ${stateEditCollectionName}`,
-      });
-      handleGetCollectionFromStorage();
-      setStateEditCollectionName('');
+      history.push(`/collection/${stateCollectionName}`);
       closeButton();
     } else {
       Swal.fire({
@@ -99,26 +69,77 @@ const Collection: React.FC = () => {
     }
   };
 
-  const handleDeleteCollection = (e: any, key: string) => {
-    e.preventDefault();
+  const handleReleaseCollection: any = (e: any, { id, title }: any) => {
+    console.log(title);
     Swal.fire({
-      title: `Are you sure for delete ${key} collection?`,
+      title: `Are you sure for delete ${title?.english} from ${params.id} collection?`,
       showCancelButton: true,
       confirmButtonText: 'Yes',
       confirmButtonAriaLabel: 'white',
       confirmButtonColor: '#d36b00',
     }).then((result: any) => {
       if (result.isConfirmed) {
-        localStorage.removeItem(key);
+        const savedCollection: string | undefined =
+          localStorage.getItem(params?.id) ?? '';
+        const listOfCollection = JSON.parse(savedCollection);
+        const filteredCollection = listOfCollection?.filter(
+          (val: any) => val?.Media?.id !== id,
+        );
+        localStorage.setItem(params?.id, JSON.stringify(filteredCollection));
         Swal.fire({
           icon: 'success',
           title: 'Success',
-          text: `Successfully deleted ${key} collection`,
+          text: `Successfully released ${title?.english}  from ${params?.id} collection`,
         });
         handleGetCollectionFromStorage();
       }
     });
   };
+  //   const handleEditCollection = (e: any, closeButton: any, key: string) => {
+  //     e.preventDefault();
+
+  //     if (!localStorage.getItem(stateEditCollectionName)) {
+  //       localStorage.setItem(stateEditCollectionName, '[]');
+  //       const oldData: any = localStorage.getItem(key);
+  //       localStorage.setItem(stateEditCollectionName, oldData);
+  //       localStorage.removeItem(key);
+  //       Swal.fire({
+  //         icon: 'success',
+  //         title: 'Success',
+  //         text: `Successfully update collection to ${stateEditCollectionName}`,
+  //       });
+  //       handleGetCollectionFromStorage();
+  //       setStateEditCollectionName('');
+  //       closeButton();
+  //     } else {
+  //       Swal.fire({
+  //         icon: 'error',
+  //         title: 'Oops... Collection is already exist',
+  //         text: 'Please try to fill with other collection name :)',
+  //       });
+  //     }
+  //   };
+
+  //   const handleDeleteCollection = (e: any, key: string) => {
+  //     e.preventDefault();
+  //     Swal.fire({
+  //       title: `Are you sure for delete ${key} collection?`,
+  //       showCancelButton: true,
+  //       confirmButtonText: 'Yes',
+  //       confirmButtonAriaLabel: 'white',
+  //       confirmButtonColor: '#d36b00',
+  //     }).then((result: any) => {
+  //       if (result.isConfirmed) {
+  //         localStorage.removeItem(key);
+  //         Swal.fire({
+  //           icon: 'success',
+  //           title: 'Success',
+  //           text: `Successfully deleted ${key} collection`,
+  //         });
+  //         handleGetCollectionFromStorage();
+  //       }
+  //     });
+  //   };
 
   return (
     <Container>
@@ -138,52 +159,33 @@ const Collection: React.FC = () => {
           css={css`
             display: flex;
             align-items: center;
-            @media (max-width: 600px) {
-              display: block;
-            }
           `}
         >
-          <div
-            css={css`
-              display: flex;
-              justify-items: center;
-              margin-top: 10px;
-            `}
+          <h2
+            css={css({
+              fontSize: '25px',
+            })}
           >
-            <h2
-              css={css({
-                fontSize: '25px',
-              })}
-            >
-              List Collection
-            </h2>
-          </div>
+            {params?.id}
+          </h2>
           <Popup
             trigger={
               <button
-                onClick={() => setStateCollectionName('')}
                 css={css`
                   width: auto;
                   border-radius: 8px;
                   font-size: 16px;
                   margin-top: auto;
                   margin-bottom: auto;
-                  margin-left: auto;
                   height: 50px;
                   cursor: pointer;
-                  padding-left: 2%;
-                  padding-right: 2%;
-                  background: #d36b00;
-                  color: white;
                   border: none;
                   align-items: center;
+                  background: none;
                   display: flex;
                   font-weight: 600;
                   gap: 5px;
-                  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-                  @media (max-width: 600px) {
-                    width: 100%;
-                  }
+                  text-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
                 `}
               >
                 <div
@@ -194,8 +196,14 @@ const Collection: React.FC = () => {
                     align-items: center;
                   `}
                 >
-                  <span className="material-icons">add</span>
-                  <span>Add New Collection</span>
+                  <span
+                    css={css`
+                      color: #d36b00;
+                    `}
+                    className="material-icons"
+                  >
+                    edit
+                  </span>
                 </div>
               </button>
             }
@@ -259,7 +267,7 @@ const Collection: React.FC = () => {
 
                         <div>
                           <form
-                            onSubmit={(e) => handleAddNewCollection(e, close)}
+                            onSubmit={(e) => handleEditCollection(e, close)}
                             css={css`
                               display: flex;
                             `}
@@ -272,7 +280,7 @@ const Collection: React.FC = () => {
                               `}
                             >
                               <div>
-                                <h2>Add New Collection</h2>
+                                <h2>Edit Collection Name</h2>
                               </div>
                               <div
                                 css={css`
@@ -353,28 +361,23 @@ const Collection: React.FC = () => {
             }
           </Popup>
         </div>
-
         <div
           css={css`
             font-size: 20px;
             align-items: center;
             display: flex;
             margin-top: 10px;
-            flex-direction: column;
-            gap: 10px;
-            justify-content: center;
             gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
           `}
         >
-          {stateCollectionList?.map((colc: any, key: Key) => (
-            <ListCollection
-              handleDeleteCollection={handleDeleteCollection}
-              colc={colc}
+          {stateCollectionList?.map((val: any, key: Key) => (
+            <Card
+              isCollection
+              handleReleaseCollection={handleReleaseCollection}
               key={key}
-              handleEditCollection={handleEditCollection}
-              stateErrorMsgEdit={stateErrorMsgEdit}
-              stateEditCollectionName={stateEditCollectionName}
-              setStateEditCollectionName={setStateEditCollectionName}
+              {...val?.Media}
             />
           ))}
         </div>
@@ -383,4 +386,4 @@ const Collection: React.FC = () => {
   );
 };
 
-export default Collection;
+export default CollectionDetail;

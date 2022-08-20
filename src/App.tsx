@@ -5,7 +5,7 @@ import Home from './page/Home';
 import Anime from './page/Anime';
 import './index.css';
 import Collection from './page/Collection';
-import CollectionDetail from './page/ListCollection';
+import CollectionDetail from './page/CollectionDetail';
 // import AnimeProvider from './context/AnimeContext';
 
 const App: React.FC = () => {
@@ -13,13 +13,13 @@ const App: React.FC = () => {
     <Router>
       <Switch>
         <Suspense fallback={<div>Loading...</div>}>
+          <Route path="/anime/:id" exact render={() => <Anime />} />
           <Route path="/collection" exact render={() => <Collection />} />
           <Route
-            path="/anime/collection/:id"
+            path="/collection/:id"
             exact
             render={() => <CollectionDetail />}
           />
-          <Route path="/anime/:id" exact render={() => <Anime />} />
           <Route path="/" exact render={() => <Home />} />
         </Suspense>
       </Switch>

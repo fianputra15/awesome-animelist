@@ -9,6 +9,8 @@ interface CardType {
   seasonYear: number;
   coverImage: any;
   key: Key | null | undefined;
+  isCollection: boolean | undefined;
+  handleReleaseCollection: any | undefined;
 }
 const fade = keyframes`
   from {
@@ -19,13 +21,21 @@ const fade = keyframes`
   }
 `;
 const Card: React.FC<any> = (props: CardType) => {
-  const { id, title, key, coverImage, seasonYear } = props;
+  const {
+    id,
+    title,
+    key,
+    coverImage,
+    seasonYear,
+    handleReleaseCollection,
+    isCollection,
+  } = props;
   return (
     <Link
       css={css`
         text-decoration: none;
         &:hover {
-          filter: brightness(80%);
+          filter: ${!isCollection ? 'brightness(80%)' : 'brightness(100%)'};
         }
         @media (max-width: 600px) {
           width: 100%;
@@ -81,6 +91,65 @@ const Card: React.FC<any> = (props: CardType) => {
             {seasonYear}
           </span>
         </div>
+        {isCollection && (
+          <button
+            onClick={(e: any) => {
+              e.preventDefault();
+              handleReleaseCollection(e, {
+                id,
+                title,
+              });
+            }}
+            type="button"
+            css={css`
+              background: transparent;
+              cursor: pointer;
+              border: none;
+              text-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+              padding: 10px;
+              color: white;
+              position: absolute;
+              right: 0%;
+              bottom: 0%;
+              border-radius: 8px;
+              width: 100%;
+              display: flex;
+              z-index: 10;
+              align-items: center;
+              font-weight: 700;
+              background: red;
+              &:hover {
+                filter: brightness(80%);
+              }
+            `}
+          >
+            <div
+              css={css`
+                margin-left: auto;
+                margin-right: auto;
+                display: flex;
+              `}
+            >
+              <span
+                css={css`
+                  margin-top: auto;
+                  margin-bottom: auto;
+                `}
+                className="material-icons"
+              >
+                delete
+              </span>
+              <span
+                css={css`
+                  margin-top: auto;
+                  margin-bottom: auto;
+                `}
+              >
+                Release
+              </span>
+            </div>
+          </button>
+        )}
       </div>
 
       <div
