@@ -27,7 +27,6 @@ const Collection: React.FC = () => {
           val: val[1],
         };
       }) || [];
-    console.log(listOfCollections);
     setStateCollectionList(listOfCollections);
   };
 

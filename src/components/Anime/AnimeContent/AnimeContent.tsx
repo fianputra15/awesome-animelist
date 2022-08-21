@@ -14,6 +14,7 @@ interface AnimeContentType {
   handleAddToCollection: Function;
   handleAddNewCollection: Function;
   handleReleaseCollection: Function;
+  stateErrorMsg: string;
 }
 
 export const AnimeContent: React.FC<any> = (props: AnimeContentType) => {
@@ -27,6 +28,7 @@ export const AnimeContent: React.FC<any> = (props: AnimeContentType) => {
     handleAddNewCollection,
     handleReleaseCollection,
     listOfCollections,
+    stateErrorMsg,
     setStateOpenedFormNew,
   } = props;
   return (
@@ -62,6 +64,7 @@ export const AnimeContent: React.FC<any> = (props: AnimeContentType) => {
         {...data?.Media}
         {...data?.Review}
         data={data}
+        stateErrorMsg={stateErrorMsg}
         listOfCollections={listOfCollections}
         handleAddToCollection={handleAddToCollection}
       />

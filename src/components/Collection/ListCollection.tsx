@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { Key, useEffect } from 'react';
+import React, { Key } from 'react';
 import { css } from '@emotion/react';
 import { useHistory } from 'react-router-dom';
 import { isEmpty } from 'lodash';
@@ -29,9 +29,10 @@ const ListCollection: React.FC<any> = (props: ListCollectionType) => {
   const handleRedirectToDetail = () => {
     history.push(`/collection/${colc?.key}`);
   };
-  useEffect(() => {
-    setStateEditCollectionName(colc?.key);
-  }, [colc]);
+  // useEffect(() => {
+  //   setStateEditCollectionName(colc?.key);
+  //   console.log(colc?.key);
+  // }, [colc?.key]);
 
   return (
     <button
@@ -68,13 +69,12 @@ const ListCollection: React.FC<any> = (props: ListCollectionType) => {
           `}
         >
           <Popup
-            onClick={(e: any) => e?.stopPropagation()}
+            onOpen={() => {
+              setStateEditCollectionName(colc?.key);
+            }}
+            // onClick={(e: any) => e?.stopPropagation()}
             trigger={
               <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setStateEditCollectionName(colc?.key);
-                }}
                 type="button"
                 css={css`
                   align-self: baseline;

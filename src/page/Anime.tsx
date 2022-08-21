@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { css, keyframes } from '@emotion/react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useQuery, gql } from '@apollo/client';
@@ -19,10 +19,12 @@ const shimeringLoading = keyframes`
   }
 `;
 const Anime: React.FC = (props: any) => {
+  const specialChars = /[-’/`~!#*$@_%+=.,^&(){}[\]|;:”<>?\\]/g;
   const params: any = useParams();
   const history = useHistory();
   const [stateNewCollection, setStateNewCollection]: any = useState(null);
   const [stateOpenedFormNew, setStateOpenedFormNew]: any = useState(false);
+  const [stateErrorMsg, setStateErrorMsg]: any = useState('');
   const GET_ANIMES = gql`
     query ($id: Int) {
       Media(id: $id) {
@@ -52,10 +54,23 @@ const Anime: React.FC = (props: any) => {
     },
   });
 
+  const containsSpecialChars = (str: string) => {
+    return specialChars.test(str);
+  };
+
+  useEffect(() => {
+    if (containsSpecialChars(stateNewCollection)) {
+      setStateErrorMsg(
+        `Please try to fill with no special characters contain ${specialChars}`,
+      );
+    } else {
+      setStateErrorMsg('');
+    }
+  }, [stateNewCollection]);
+
   const handleAddToCollection: any = (key: any | undefined, anime: any) => {
     const lengthOfCollection: string | undefined =
       localStorage.getItem(key) ?? '';
-    console.log(lengthOfCollection.length);
     if (lengthOfCollection.length <= 0) {
       const listOfCollection: any[] = [];
       listOfCollection.push(anime);
@@ -180,6 +195,7 @@ const Anime: React.FC = (props: any) => {
             shimeringLoading={shimeringLoading}
             listWebStorage={listWebStorage}
             data={data}
+            stateErrorMsg={stateErrorMsg}
             listOfCollections={listOfCollections}
             handleReleaseCollection={handleReleaseCollection}
             handleAddToCollection={handleAddToCollection}

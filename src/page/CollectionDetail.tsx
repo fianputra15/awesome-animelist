@@ -67,7 +67,6 @@ const CollectionDetail: React.FC = () => {
   };
 
   const handleReleaseCollection: any = (e: any, { id, title }: any) => {
-    console.log(title);
     Swal.fire({
       title: `Are you sure for delete ${title?.english} from ${params.id} collection?`,
       showCancelButton: true,

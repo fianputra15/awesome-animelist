@@ -51,7 +51,6 @@ const Home: React.FC = (props: any) => {
   `;
   const { data, loading, refetch: refetchAnime } = useQuery(GET_ANIMES);
   const { currentPage, lastPage } = data?.Page?.pageInfo || 1;
-  console.log(lastPage);
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     refetchAnime();

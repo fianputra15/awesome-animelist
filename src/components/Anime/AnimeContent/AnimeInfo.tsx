@@ -22,6 +22,7 @@ interface AnimeInfoType {
   data: any[];
   shimeringLoading: any;
   seasonYear: ReactNode;
+  stateErrorMsg: string;
 }
 const AnimeInfo: React.FC<AnimeInfoType> = (props: AnimeInfoType) => {
   const {
@@ -42,8 +43,8 @@ const AnimeInfo: React.FC<AnimeInfoType> = (props: AnimeInfoType) => {
     handleAddNewCollection,
     listOfCollections,
     shimeringLoading,
+    stateErrorMsg,
   } = props;
-  console.log(shimeringLoading);
   return (
     <div
       css={css`
@@ -456,6 +457,16 @@ const AnimeInfo: React.FC<AnimeInfoType> = (props: AnimeInfoType) => {
                                         `}
                                       />
                                     </div>
+                                    <span
+                                      css={css`
+                                        display: block;
+                                        font-size: 10px;
+                                        margin-top: 5px;
+                                        color: red;
+                                      `}
+                                    >
+                                      {stateErrorMsg}
+                                    </span>
 
                                     <div
                                       css={css`
@@ -465,10 +476,14 @@ const AnimeInfo: React.FC<AnimeInfoType> = (props: AnimeInfoType) => {
                                     >
                                       <button
                                         type="submit"
+                                        disabled={!isEmpty(stateErrorMsg)}
                                         css={css`
                                           border: none;
                                           padding: 10px;
                                           margin-top: 10px;
+                                          opacity: ${!isEmpty(stateErrorMsg)
+                                            ? '50%'
+                                            : '100%'};
                                           margin-left: auto;
                                           background: #d36b00;
                                           cursor: pointer;
