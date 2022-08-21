@@ -96,13 +96,13 @@ const CollectionDetail: React.FC = () => {
     <Container>
       <div
         css={css`
-          margin-bottom: 40%;
+          margin-bottom: 80%;
           padding-right: 15%;
           padding-left: 15%;
           @media (max-width: 600px) {
             padding-right: 5%;
             padding-left: 5%;
-            margin-bottom: 80%;
+            margin-bottom: 125%;
           }
         `}
       >

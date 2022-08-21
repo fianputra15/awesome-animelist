@@ -300,7 +300,6 @@ const ListCollection: React.FC<any> = (props: ListCollectionType) => {
                 position: absolute;
                 top: 2%;
                 text-align: left;
-                text-transform: capitalize;
               `}
             >
               {colc?.key}
@@ -336,7 +335,6 @@ const ListCollection: React.FC<any> = (props: ListCollectionType) => {
                 padding: 20px;
                 position: absolute;
                 top: 2%;
-                text-transform: capitalize;
               `}
             >
               {colc?.key}

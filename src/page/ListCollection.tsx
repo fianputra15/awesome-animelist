@@ -85,7 +85,6 @@ const CollectionDetail: React.FC = (props: any) => {
               font-size: 30px;
               display: flex;
               flex-wrap: wrap;
-
               align-items: center;
               justify-content: center;
               gap: 20px;
