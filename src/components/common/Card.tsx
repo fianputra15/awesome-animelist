@@ -162,6 +162,7 @@ const Card: React.FC<any> = (props: CardType) => {
         `}
       >
         <h3
+          data-testid="card-anime"
           css={css`
             font-size: 20px;
             width: 220px;
